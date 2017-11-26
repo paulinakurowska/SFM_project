@@ -1,0 +1,61 @@
+---
+title: "sfm"
+author: "Paulina"
+date: "24 listopada 2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+if(!require("fGarch")){install.packages("fGarch")};  library(fGarch)
+```
+
+## Monte Carlo simulations of QMLE of an ARCH(1)
+
+
+```{r}
+library(fGarch)
+simulation<-function(size_of_dataset){
+  set.seed(123)
+  list_alpha<-c()
+  h<-c()
+  diff<-c()
+  for (i in 1:1000) {
+    #model<-garchSim(spec = garchSpec(), n = 100, n.start = 100, extended = FALSE)
+    modelArch<-garchFit(~garch(1), data = garchSim(spec = garchSpec(model = list(alpha = 0.9, beta = 0)), n=size_of_dataset),cond.dist = "QMLE")
+    list_alpha<-c(list_alpha,coef(modelArch)[3])
+  }
+  for (alpha in list_alpha){
+  tmp<-(alpha-0.9)^2
+  diff<-c(diff,tmp)
+  }
+  
+  count<-0
+  for (alpha in list_alpha){
+    if (round(alpha,7)>=1){
+    count=count+1
+      }
+  }
+  results<-c(paste('mean',mean(list_alpha)),paste('sd',(sum(diff)/length(diff))^0.5), paste('bigger or equal to 1', count/length(list_alpha)))
+  return(results)
+}
+
+
+Dataset100<-simulation(100)
+Dataset100
+Dataset250<-simulation(250)
+Dataset250
+Dataset500<-simulation(500)
+Dataset500
+Dataset1000<-simulation(1000)
+Dataset1000
+
+```
+
+Results
+```{r}
+Dataset100
+Dataset250
+Dataset500
+Dataset1000
+```
