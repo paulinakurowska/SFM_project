@@ -5,11 +5,11 @@ date: "24 listopada 2017"
 output: pdf_document
 ---
 Installing packages: fGarch - for Garch simulations
-Grid - for displaying the results as a table
+Grid, GridExtra - for displaying the results as a table
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 if(!require("fGarch")){install.packages("fGarch")};  library(fGarch)
-if(!require("grid")){install.packages("grid"};  library(grid)
+if(!require("grid")){install.packages("grid")};  library(grid)
 if(!require("gridExtra")){install.packages("gridExtra")};  library(gridExtra)
 
 ```
@@ -19,7 +19,7 @@ We define the function called 'simulation' which returns the string of:
 1.averaged alpha coefficient 
 2. standard deviation of the alpha from the true paramater which equals to 0.9
 3. quantity of alpha larger or equal to 1
- those were received based on the 1000 replications.
+ those were received based on the 1000 replications. This function takes the size of the dataset as an input, it must be a numeric value. The idea is to simulate ARCH (1) model with the conditional distribution defined to be calculated as Quasi Maximum Likelihood Estimation.
 Further we apply that function to different size of datasets: 100, 250, 500, 1000
 
 ```{r}
