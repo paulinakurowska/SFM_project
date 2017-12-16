@@ -7,7 +7,7 @@ output: pdf_document
 Installing packages: fGarch - for Garch simulations
 Grid, GridExtra - for displaying the results as a table
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+#knitr::opts_chunk$set(echo = TRUE)
 if(!require("fGarch")){install.packages("fGarch")};  library(fGarch)
 if(!require("grid")){install.packages("grid")};  library(grid)
 if(!require("gridExtra")){install.packages("gridExtra")};  library(gridExtra)
@@ -23,9 +23,8 @@ We define the function called 'simulation' which returns the string of:
 Further we apply that function to different size of datasets: 100, 250, 500, 1000
 
 ```{r}
-library(fGarch)
+set.seed(123)
 simulation<-function(size_of_dataset){
-  #set.seed(123)
   list_alpha<-c()
   h<-c()
   diff<-c()
@@ -86,8 +85,56 @@ data[4,1:3]<-Dataset1000[1:3]
 
 Showing and saving the table with the results as a png file
 ```{r}
-png(filename = 'table of results.png')
+
+fileName <- paste('table',Sys.time(),'.png')
+fileName <- gsub('-','_',fileName)
+fileName <- gsub(':','',fileName)
+png(filename = fileName)
 grid.table(data)
+dev.off()
+```
+
+
+```{r}
+RNGkind(kind = "Knuth-TAOCP-2002", normal.kind = NULL)
+Dataset100Knuth<-simulation(100)
+Dataset250Knuth<-simulation(250)
+Dataset500Knuth<-simulation(500)
+Dataset1000Knuth<-simulation(1000)
+rowNames <- c('Dataset100','Dataset250','Dataset500','Dataset1000')
+columnNames <- c('average of alpha', 'sd of alpha', 'alpha >= 1')
+dataRNGKnuth <- matrix(NA, length(rowNames),length(columnNames))
+               rownames(dataRNGKnuth)=rowNames
+               colnames(dataRNGKnuth)=columnNames
+               dataRNGKnuth[,]=matrix(1:12,3,4)
+dataRNGKnuth[1,1:3]<-Dataset100Knuth[1:3]
+dataRNGKnuth[2,1:3]<-Dataset250Knuth[1:3]
+dataRNGKnuth[3,1:3]<-Dataset500Knuth[1:3]
+dataRNGKnuth[4,1:3]<-Dataset1000Knuth[1:3]
+png(filename = 'Results for Knuth 2002.png')
+grid.table(dataRNGKnuth)
+dev.off()
+```
+
+
+```{r}
+RNGkind(kind = "Wichmann-Hill", normal.kind = NULL)
+Dataset100WH<-simulation(100)
+Dataset250WH<-simulation(250)
+Dataset500WH<-simulation(500)
+Dataset1000WH<-simulation(1000)
+rowNames <- c('Dataset100','Dataset250','Dataset500','Dataset1000')
+columnNames <- c('average of alpha', 'sd of alpha', 'alpha >= 1')
+dataRNGWH <- matrix(NA, length(rowNames),length(columnNames))
+               rownames(dataRNGWH)=rowNames
+               colnames(dataRNGWH)=columnNames
+               dataRNGWH[,]=matrix(1:12,3,4)
+dataRNGWH[1,1:3]<-Dataset100WH[1:3]
+dataRNGWH[2,1:3]<-Dataset250WH[1:3]
+dataRNGWH[3,1:3]<-Dataset500WH[1:3]
+dataRNGWH[4,1:3]<-Dataset1000WH[1:3]
+png(filename = 'Results for Wichmann Hill.png')
+grid.table(dataRNGWH)
 dev.off()
 ```
 
