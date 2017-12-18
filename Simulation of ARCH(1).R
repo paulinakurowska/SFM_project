@@ -58,7 +58,7 @@ simulation<-function(size_of_dataset, k=1000,s=123){
 }
 
 
-Dataset100st<-simulation(100)
+Dataset100<-simulation(100)
 Dataset250<-simulation(250)
 Dataset500<-simulation(500)
 Dataset1000<-simulation(1000)
@@ -113,3 +113,6 @@ dataRNGWH[4,1:3]<-Dataset1000WH[1:3]
 png(filename = 'Results for Wichmann Hill.png')
 grid.table(dataRNGWH)
 dev.off()
+
+#back to default setting for RNG
+RNGkind(kind = "default", normal.kind = "default")
