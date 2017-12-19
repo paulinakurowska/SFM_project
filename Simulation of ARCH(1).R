@@ -9,8 +9,8 @@ if(!require("gridExtra")){install.packages("gridExtra")};  library(gridExtra)
 
 #Simulation: function takes an input for # replications =k (by defeult it is 1000)
 # and seed (by default it is 123)
-simulation<-function(size_of_dataset, k=1000,s=123){
-  set.seed(s)
+set.seed(123)
+simulation<-function(size_of_dataset, k=1000){
   list_alpha<-c()
   h<-c()
   diff<-c()
