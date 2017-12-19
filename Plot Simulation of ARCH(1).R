@@ -8,7 +8,7 @@ if(!require("grid")){install.packages("grid")};  library(grid)
 if(!require("gridExtra")){install.packages("gridExtra")};  library(gridExtra)
 
 #set seed
-set.seed(123456)
+set.seed(134)
 #simulated ARCH(1) model with n=100 with alpha=0.9 
 sim100<-garchSim(spec = garchSpec(model = list(alpha = 0.9, beta = 0)),100)
 #plot PACF of squared Observations
