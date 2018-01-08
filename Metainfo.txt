@@ -1,4 +1,3 @@
-
 Name of Quantlet: SFEqmle
 
 Published in: Statistics of Financial Markets
