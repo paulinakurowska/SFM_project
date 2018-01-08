@@ -8,8 +8,6 @@ Keywords: monte carlo simulation, qml estimation, arch(1)
 
 Author: Paulina Kurowska, Wang Bingling
 
-See also: for listing related, similar Quantlets or Github code from your point of view - delete if not used
-
 Submitted:  Mon, January 08 2018 by Paulina Kurowska
 
 Example: 
