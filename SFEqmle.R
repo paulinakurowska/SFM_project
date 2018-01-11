@@ -16,6 +16,23 @@ if (!require("gridExtra")) {
 }
 library(gridExtra)
 
+#Simulation for one process
+#set seed
+set.seed(134)
+#set n for n=1000
+sim1000 = garchSim(spec = garchSpec(model = list(alpha = 0.9, beta = 0)),1000)
+#plot PACF of squared Observations
+sim10002 = sim1000^2
+pacf(sim10002)
+#ARCH model estimation
+model1000  =  garchFit(~garch(1), data =sim1000,cond.dist = "QMLE")
+#plot of Time Series
+plot(model1000,which = 1)
+#plot of Standardized Residuals
+plot(model1000,which = 9)
+#Quantile-Quantile Plot of Standardized Residuals
+plot(model1000,which = 13)
+
 # Simulation: function takes an input for # replications =k 
 #(by default it is 1000) and seed (by default it is 123)
 set.seed(123) #arbitrary seed
